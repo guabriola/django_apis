@@ -4,8 +4,14 @@ Toda la infor en:
 https://www.django-rest-framework.org/
 https://www.django-rest-framework.org/tutorial/quickstart/
 
+
+Tutorial donde se sacó  este manual --->
+https://www.youtube.com/watch?v=GE0Q8YNKNgs
+
 *Instalar entorno Virtual y activarlo
 python3 -m venv my_env
+ubuntu --> source env/bin/activate
+
 *Instalar DJango 
 pip install django
 
@@ -19,7 +25,7 @@ django-admin startproject NombreDelProyecto .  // Con el punto le digo que lo cr
 python manage.py runserver
 Ir a la ip que te da en el mensaje ---> http://127.0.0.1:8000/
 
-*Crear API
+*Crear API (Ejemplo)
 Vamos a crear una API que nos permita poder obtener, crear, eliminar,  proyecto y actualizarlos (CRUD)
 python manage.py startapp NOMBRE_API_APP
 
@@ -87,7 +93,7 @@ Arthivos-->
 
         #Aqui vamos a decir que consultas vamos a poder hacer
         class ViewSetProyecto(viewsets.ModelViewSet):
-            queryset = Proyecto.objects.all #Utilizando el modelo Proyecto le decimos que consulte todos los objetos 
+            queryset = Proyecto.objects.all() #Utilizando el modelo Proyecto le decimos que consulte todos los objetos 
             permission_classes = [permissions.AllowAny]
             serializer_class = ProyectoSerializer   #Aqui llamamos el Serializer para decirle a partir de que Serializer va a estar utilizando estos datos. 
                                                     #Le decimos como los va a convertir
@@ -105,11 +111,17 @@ Archivos -->
 
 
         #Hay que exportar el urlPatterns
-        urlpatters = router.urls
+        urlpatterns = router.urls
 
     Ya estan creadas las rutas, pero la plicacione principal no las conoce, 
     entonces hay que modificar el archivo urls.py -->
-        
+
 
 *Tenemos que añadir las rutas a la aplicaciones principal. 
 
+        from django.urls import path, include
+        urlpatterns = [
+            path('admin/', admin.site.urls),
+            path('', include('proyectos.urls')),
+            path('', include('usuarios.urls'))
+        ]
